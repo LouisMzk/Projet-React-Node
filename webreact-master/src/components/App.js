@@ -29,12 +29,15 @@ class App extends React.Component{
         if(this.state.hasToken)
         return <RecetteForm token={this.token}/>
         return(
-            <div className="w-login">
-                <form>
-                    <input type="text" name="username" value={this.state.username} placeholder="pseudo" onChange={this.handleChange}/>
-                    <input type="password" name="password" value={this.state.password} placeholder="password" onChange={this.handleChange}/>
-                    <input type="submit" value="Log in" onClick={this.handleLogin}/>
-                </form>
+            <div>
+                <h1>Connection à mon App de recettes</h1>
+                <div className="w-login">
+                    <form>
+                        <input type="text" name="username" value={this.state.username} placeholder="pseudo" onChange={this.handleChange}/>
+                        <input type="password" name="password" value={this.state.password} placeholder="password" onChange={this.handleChange}/>
+                        <input type="submit" value="Log in" onClick={this.handleLogin}/>
+                    </form>
+                </div>
             </div>
         );
     }

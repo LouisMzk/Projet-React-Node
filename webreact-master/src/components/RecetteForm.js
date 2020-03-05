@@ -25,12 +25,15 @@ export default class RecetteForm extends React.Component{
 
     render(){
         return (
-            <div className="w-login">
-                <form>
-                    <input type="text" name="title" value={this.state.title} placeholder="Title" onChange={this.handleChange}/>
-                    <input type="text" name="description" value={this.state.description} placeholder="Description" onChange={this.handleChange}/>
-                    <input type="submit" value="Poster" onClick={this.postRecette}/>
-                </form>
+            <div>
+                <h1>Ajouter des recettes</h1>
+                <div className="w-login">
+                    <form>
+                        <input type="text" name="title" value={this.state.title} placeholder="Title" onChange={this.handleChange}/>
+                        <textarea name="description" value={this.state.description} placeholder="Description" onChange={this.handleChange}></textarea>
+                        <input type="submit" value="Poster" onClick={this.postRecette}/>
+                    </form>
+                </div>
             </div>
         )
     }
