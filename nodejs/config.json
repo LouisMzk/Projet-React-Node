@@ -1,0 +1,9 @@
+{
+    "secret": "iojbfiodjdfiobfjdiobjdfobijbdfiojbfiobjfiodbjogfdnfojof",
+    "database": { 
+        "user": "root",
+        "password": "",
+        "host": "localhost",
+        "database": "db_recette"
+     }
+}
