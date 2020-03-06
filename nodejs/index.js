@@ -38,13 +38,27 @@ server.use(
 
 server.listen(4200)
 
-server.get('/home', (req, res) => {
-    res.send("<h1>LOL</h1>");
-});
-
 server.get("/recette/:id", (req, res) => {
     res.status(404).json(req.params.id)
 });
+
+server.get('/recettes', needToken, (req, res) => {
+    query('SELECT * FROM recette WHERE user_id = ?', [req.user.id])
+        .then( results => {
+            if(!results) res.status(200).json([])
+            if(!Array.isArray(results))
+                results = [results]
+            res.status(200).json(results)
+        })
+        .catch(error => res.sendStatus(500))
+})
+
+server.delete('/recette/:id', needToken, (req, res) => {
+    const id = +req.params.id
+    query('DELETE FROM recette WHERE id = ?', [id])
+        .then(() => res.sendStatus(200))
+        .catch(err => res.sendStatus(500))
+})
 
 server.post("/recette", needToken, (req, res) => {
     const recette = [
@@ -57,7 +71,6 @@ server.post("/recette", needToken, (req, res) => {
         .catch(err => res.sendStatus(500))
 })
 
-
 server.post( '/login', async ( req, res ) => {
 
     const user = {
@@ -69,6 +82,7 @@ server.post( '/login', async ( req, res ) => {
         if(!dbUser){
             await query('INSERT INTO user (username,password) VALUES (?,?)',[user.username,user.password])
             dbUser = await query('SELECT id FROM user WHERE username=?',[user.username])
+        
         }else{
             if(dbUser.password !== user.password)
             return res.status(403).json({error: 'Password is invalid'})

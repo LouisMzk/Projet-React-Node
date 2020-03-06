@@ -1,5 +1,13 @@
 import axios from "axios";
 
-export default axios.create({
+const A = axios.create({
     baseURL: "http://localhost:4200" 
-});
+})
+
+A.attachToken = function(token){
+    return {
+        headers: { Authorization: 'Bearer ' + token }
+    }
+}
+
+export default A

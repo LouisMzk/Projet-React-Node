@@ -2,15 +2,15 @@ import React from "react";
 import Connecteur from "../connecteur/Connecteur";
 import qs from 'querystring'
 import RecetteForm from "./RecetteForm";
+import RecetteList from './RecetteList'
 
 class App extends React.Component{
-
-    token = ''
 
     state = {
         username: '',
         password: '',
-        hasToken: false
+        hasToken: false,
+        token: ''
     }
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -19,19 +19,18 @@ class App extends React.Component{
         e.preventDefault()
         Connecteur.post('/login', qs.stringify(this.state))
             .then(res => {
-                this.token = res.data.token
-                this.setState({ hasToken: true })
+                this.setState({ hasToken: true, token: res.data.token })
             })
             .catch(console.error)
     }
 
     render() {
         if(this.state.hasToken)
-        return <RecetteForm token={this.token}/>
+        return <RecetteList token={this.state.token}/>
         return(
-            <div>
-                <h1>Connection à mon App de recettes</h1>
-                <div className="w-login">
+            <div className="component">
+                <h1>Connection</h1>
+                <div>
                     <form>
                         <input type="text" name="username" value={this.state.username} placeholder="pseudo" onChange={this.handleChange}/>
                         <input type="password" name="password" value={this.state.password} placeholder="password" onChange={this.handleChange}/>
